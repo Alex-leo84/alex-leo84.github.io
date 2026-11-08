@@ -1,126 +1,404 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="dark scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ayuda para una Vida Digna - Alex desde Cuba</title>
+    <title>Apoya mi Proyecto | Donaciones Web3</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#0a0b0d',
+                        cardBg: '#12141a',
+                        cardBorder: '#232733',
+                        primaryAccent: '#00F2FE',
+                        secondaryAccent: '#4FACFE',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- qrcode.js para generar QR dinámicos -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            background: #f0f2f5;
-            color: #222;
-        }
-        header {
-            background: #0077ff;
-            color: white;
-            padding: 30px;
-            text-align: center;
-        }
-        h1 {
-            margin: 0;
-            font-size: 32px;
-        }
-        .container {
-            max-width: 850px;
-            margin: 30px auto;
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 0 12px rgba(0,0,0,0.15);
-        }
-        h2 {
-            border-left: 5px solid #0077ff;
-            padding-left: 10px;
-            margin-top: 40px;
-        }
-        .qr-container {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            margin-top: 25px;
-        }
-        .qr-box {
-            text-align: center;
-            margin: 15px;
-        }
-        .qr-box img {
-            width: 180px;
-            height: 180px;
-            border-radius: 10px;
-            border: 2px solid #ddd;
-        }
-        footer {
-            text-align: center;
-            padding: 15px 0;
-            margin-top: 40px;
-            color: #555;
-        }
+        body { font-family: 'Inter', sans-serif; background-color: #0a0b0d; color: #f3f4f6; }
+        .glow { box-shadow: 0 0 40px -10px rgba(0, 242, 254, 0.15); }
+        .glow-btn:hover { box-shadow: 0 0 20px rgba(0, 242, 254, 0.4); }
     </style>
 </head>
-<body>
+<body class="bg-darkBg text-gray-100 min-h-screen flex flex-col selection:bg-primaryAccent selection:text-black">
 
-<header>
-    <h1>Ayúdame a Construir una Vida Digna para mi Familia</h1>
-    <p>Campaña de apoyo para emigrar desde Cuba hacia Uruguay</p>
-</header>
-
-<div class="container">
-
-    <h2>¿Quién soy?</h2>
-    <p>Mi nombre es <strong>Alex</strong>, tengo 41 años y soy ciudadano cubano. Trabajo como <strong>chófer profesional</strong> con más de 10 años de experiencia y conocimientos de computación, además de un nivel básico de inglés y la capacidad de aprender rápido cualquier oficio o tarea.</p>
-
-    <h2>Mi familia</h2>
-    <p>Estoy casado y soy padre de 3 hijos. La situación económica en Cuba es extremadamente complicada y limita nuestra posibilidad de vivir con dignidad, trabajar con estabilidad y brindar un futuro seguro a nuestros hijos.</p>
-
-    <h2>¿Cuál es nuestra meta?</h2>
-    <p>Queremos emigrar legalmente hacia <strong>Uruguay</strong>, donde pueda conseguir un trabajo estable y comenzar una nueva vida. Para ello necesitamos cubrir:</p>
-
-    <ul>
-        <li>Pasaportes y documentos legales</li>
-        <li>Pasajes a Guyana (ida y vuelta)</li>
-        <li>Alojamiento temporal</li>
-        <li>Travesía por Brasil hacia Uruguay</li>
-        <li>Legalización de documentos al llegar</li>
-        <li>Gastos básicos de los primeros días</li>
-    </ul>
-
-    <h2>Cómo puedes ayudar</h2>
-    <p>En Cuba es muy difícil recibir donaciones en dólares o euros, pero <strong>sí podemos recibir criptomonedas</strong>. Cualquier aporte, por pequeño que sea, es de gran ayuda para acercarnos a esta meta de darle un futuro digno a mis hijos.</p>
-
-    <div class="qr-container">
-        <div class="qr-box">
-            <h3>Bitcoin</h3>
-            <img src="BTC_QR.png" alt="QR Bitcoin">
-            <p><small>33pS5JXZn4GVzwu5U9gxRHJcQS1sy7yvvZ</small></p>
-        </div>
-
-        <div class="qr-box">
-            <h3>Ethereum</h3>
-            <img src="ETH_QR.png" alt="QR Ethereum">
-            <p><small>0xe99072Fd7CE55C389416CcFc4E05512F6c6eeB5e</small></p>
-        </div>
-
-        <div class="qr-box">
-            <h3>USDT (TRC20)</h3>
-            <img src="USDT_QR.png" alt="QR USDT TRC20">
-            <p><small>TKynXv1p8jqEMVdERx3SpRqMayMxxxEuGJ</small></p>
-        </div>
+    <!-- Notificación Toast Flotante -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-32 opacity-0 transition-all duration-300 bg-gray-900 border border-primaryAccent/40 text-white px-5 py-3 rounded-xl shadow-2xl flex items-center space-x-3">
+        <i data-lucide="check-circle-2" class="w-5 h-5 text-primaryAccent"></i>
+        <span id="toast-message" class="text-sm font-medium">¡Dirección copiada al portapapeles!</span>
     </div>
 
-    <h2>Contacto directo</h2>
-    <p>Si alguna persona u organización puede ofrecerme un contrato laboral o apoyo adicional, pueden escribirme directamente a:</p>
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-40 backdrop-blur-md bg-darkBg/80 border-b border-cardBorder">
+        <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center shadow-lg">
+                    <i data-lucide="shield-check" class="w-6 h-6 text-black"></i>
+                </div>
+                <span class="font-bold text-lg tracking-tight bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">FundWeb3</span>
+            </div>
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-300">
+                <a href="#about" class="hover:text-primaryAccent transition-colors">Sobre Mí</a>
+                <a href="#donate" class="hover:text-primaryAccent transition-colors">Donar Cripto</a>
+                <a href="#transparency" class="hover:text-primaryAccent transition-colors">Transparencia</a>
+            </nav>
+            <div>
+                <a href="#donate" class="bg-white/10 hover:bg-white/20 border border-white/10 text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-all">
+                    Contribuir
+                </a>
+            </div>
+        </div>
+    </header>
 
-    <p style="font-size:18px; text-align:center;"><strong>📧 leon840725@gmail.com</strong></p>
+    <!-- Hero Section -->
+    <section class="relative pt-20 pb-16 px-6 overflow-hidden">
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-primaryAccent/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="max-w-4xl mx-auto text-center relative z-10">
+            <div class="inline-flex items-center space-x-2 bg-cardBg border border-cardBorder px-3.5 py-1.5 rounded-full text-xs font-medium text-primaryAccent mb-6">
+                <span class="w-2 h-2 rounded-full bg-primaryAccent animate-pulse"></span>
+                <span>Campaña Activa de Financiación Abierta</span>
+            </div>
+            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 leading-tight">
+                Impulsa el futuro del <span class="bg-gradient-to-r from-primaryAccent to-secondaryAccent bg-clip-text text-transparent">Software Libre</span> y la Innovación
+            </h1>
+            <p class="text-lg md:text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
+                Tu apoyo directo hace posible el desarrollo independiente, transparente y sin censura. Dona de forma segura mediante criptomonedas.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+                <a href="#donate" class="w-full sm:w-auto bg-gradient-to-r from-primaryAccent to-secondaryAccent text-black font-semibold px-8 py-3.5 rounded-xl glow-btn transition-all flex items-center justify-center space-x-2">
+                    <span>Donar Ahora</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </a>
+                <a href="#about" class="w-full sm:w-auto bg-cardBg hover:bg-cardBorder border border-cardBorder text-gray-300 font-semibold px-8 py-3.5 rounded-xl transition-all">
+                    Conoce mi historia
+                </a>
+            </div>
 
-    <p>Gracias por leer mi historia y por cualquier ayuda o difusión. Cada gesto cuenta y puede cambiar la vida de una familia entera.</p>
+            <!-- Estadísticas Rápidas -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 p-6 rounded-2xl bg-cardBg/60 border border-cardBorder backdrop-blur-sm">
+                <div>
+                    <p class="text-xs uppercase tracking-wider text-gray-400 mb-1">Meta de Recaudación</p>
+                    <p class="text-2xl font-bold text-white">$10,000 <span class="text-sm text-gray-400 font-normal">USD</span></p>
+                </div>
+                <div>
+                    <p class="text-xs uppercase tracking-wider text-gray-400 mb-1">Recaudado Actual</p>
+                    <p class="text-2xl font-bold text-primaryAccent">$6,450 <span class="text-sm text-gray-400 font-normal">USD (64.5%)</span></p>
+                </div>
+                <div>
+                    <p class="text-xs uppercase tracking-wider text-gray-400 mb-1">Donantes Totales</p>
+                    <p class="text-2xl font-bold text-white">42 <span class="text-sm text-primaryAccent font-normal">+ Web3 Supporters</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-</div>
+    <!-- Barra de Progreso -->
+    <section class="py-6 px-6 max-w-4xl mx-auto w-full">
+        <div class="bg-cardBg border border-cardBorder p-6 rounded-2xl">
+            <div class="flex justify-between items-center mb-3 text-sm font-medium">
+                <span class="text-gray-300">Progreso de la meta global</span>
+                <span class="text-primaryAccent font-semibold">64.5% Completado</span>
+            </div>
+            <div class="w-full bg-gray-800 h-3 rounded-full overflow-hidden p-0.5 border border-cardBorder">
+                <div class="bg-gradient-to-r from-primaryAccent to-secondaryAccent h-full rounded-full transition-all duration-1000" style="width: 64.5%;"></div>
+            </div>
+            <div class="flex justify-between items-center mt-3 text-xs text-gray-500">
+                <span>$6,450 USD</span>
+                <span>Meta: $10,000 USD</span>
+            </div>
+        </div>
+    </section>
 
-<footer>
-    © 2025 Alex – Esperanza de una nueva vida
-</footer>
+    <!-- Sobre Mí / El Proyecto -->
+    <section id="about" class="py-16 px-6 max-w-4xl mx-auto">
+        <div class="bg-cardBg border border-cardBorder p-8 md:p-10 rounded-3xl">
+            <h2 class="text-2xl md:text-3xl font-bold mb-6 flex items-center space-x-3">
+                <i data-lucide="terminal" class="w-7 h-7 text-primaryAccent"></i>
+                <span>Sobre Mí y la Transparencia de Fondos</span>
+            </h2>
+            <div class="space-y-4 text-gray-300 leading-relaxed text-base">
+                <p>
+                    Hola, soy desarrollador de software apasionado por la descentralización, la privacidad digital y las herramientas de código abierto. Dedico el 100% de mi tiempo a crear software accesible para todos, libre de corporaciones centralizadas.
+                </p>
+                <p>
+                    Los fondos recaudados a través de esta campaña serán destinados exclusivamente a cubrir costos operativos críticos:
+                </p>
+                <ul class="list-disc list-inside space-y-2 text-gray-400 pl-2">
+                    <li><strong class="text-white">Infraestructura y Servidores:</strong> Hosting seguro, nodos RPC y bases de datos descentralizadas.</li>
+                    <li><strong class="text-white">Auditorías de Código:</strong> Revisiones de seguridad por terceros para garantizar contratos y software libres de vulnerabilidades.</li>
+                    <li><strong class="text-white">Sostenibilidad a Tiempo Completo:</strong> Horas de desarrollo dedicadas a liberar nuevas actualizaciones y parches de seguridad.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
 
+    <!-- Módulos de Donación por Criptomoneda -->
+    <section id="donate" class="py-16 px-6 max-w-4xl mx-auto">
+        <div class="text-center mb-10">
+            <h2 class="text-3xl font-bold mb-3">Elige tu Criptomoneda</h2>
+            <p class="text-gray-400">Selecciona el token o red de tu preferencia para realizar tu contribución.</p>
+        </div>
+
+        <div class="bg-cardBg border border-cardBorder rounded-3xl p-6 md:p-8">
+            <!-- Pestañas de Criptomonedas -->
+            <div class="flex flex-wrap gap-2 justify-center mb-8 border-b border-cardBorder pb-6">
+                <button onclick="switchCrypto('btc')" id="btn-btc" class="crypto-tab px-5 py-2.5 rounded-xl font-medium text-sm transition-all bg-primaryAccent text-black shadow-lg">
+                    Bitcoin (BTC)
+                </button>
+                <button onclick="switchCrypto('eth')" id="btn-eth" class="crypto-tab px-5 py-2.5 rounded-xl font-medium text-sm transition-all text-gray-400 hover:text-white hover:bg-white/5">
+                    Ethereum (ETH)
+                </button>
+                <button onclick="switchCrypto('arb')" id="btn-arb" class="crypto-tab px-5 py-2.5 rounded-xl font-medium text-sm transition-all text-gray-400 hover:text-white hover:bg-white/5">
+                    USDT/USDC (Arbitrum)
+                </button>
+                <button onclick="switchCrypto('sol')" id="btn-sol" class="crypto-tab px-5 py-2.5 rounded-xl font-medium text-sm transition-all text-gray-400 hover:text-white hover:bg-white/5">
+                    Solana (SOL)
+                </button>
+            </div>
+
+            <!-- Contenido de las Pestañas -->
+            <div id="crypto-content" class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <!-- Contenedor QR -->
+                <div class="flex flex-col items-center justify-center p-6 bg-darkBg border border-cardBorder rounded-2xl">
+                    <div id="qrcode" class="p-3 bg-white rounded-xl shadow-md mb-4"></div>
+                    <span id="crypto-network-badge" class="text-xs px-3 py-1 rounded-full bg-orange-500/10 text-orange-400 font-medium border border-orange-500/20">
+                        Red: Bitcoin Mainnet
+                    </span>
+                </div>
+
+                <!-- Detalles de la Wallet -->
+                <div class="space-y-6">
+                    <div>
+                        <span id="crypto-name" class="text-xs uppercase tracking-wider text-primaryAccent font-semibold block mb-1">Bitcoin (BTC)</span>
+                        <h3 class="text-xl font-bold text-white" id="crypto-title">Dirección de Depósito Directo</h3>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-medium text-gray-400 mb-2">Dirección de la Wallet:</label>
+                        <div class="flex items-center space-x-2 bg-darkBg border border-cardBorder rounded-xl p-3">
+                            <input type="text" id="wallet-address" readonly class="bg-transparent text-sm text-gray-300 w-full focus:outline-none font-mono truncate" value="bc1qr4d3hy39028nfwj7ak2x7ahh4qecujrpdgqhdv">
+                            <button onclick="copyWallet()" class="bg-primaryAccent hover:bg-cyan-400 text-black px-4 py-2 rounded-lg text-xs font-semibold transition-all flex items-center space-x-1 shrink-0">
+                                <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                                <span>Copiar</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-yellow-500/10 border border-yellow-500/20 text-yellow-300 text-xs flex items-start space-x-3">
+                        <i data-lucide="alert-triangle" class="w-5 h-5 shrink-0 text-yellow-400 mt-0.5"></i>
+                        <p><strong class="font-semibold">Aviso importante:</strong> Envía únicamente los activos correspondientes a la red especificada. Enviar otros tokens o usar redes incorrectas puede resultar en la pérdida permanente de tus fondos.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Muro de Agradecimientos / Transparencia -->
+    <section id="transparency" class="py-16 px-6 max-w-4xl mx-auto">
+        <div class="bg-cardBg border border-cardBorder p-8 md:p-10 rounded-3xl">
+            <h2 class="text-2xl font-bold mb-6 flex items-center space-x-3">
+                <i data-lucide="heart-handshake" class="w-6 h-6 text-primaryAccent"></i>
+                <span>Últimas Contribuciones Verificadas</span>
+            </h2>
+            <div class="space-y-4">
+                <div class="flex items-center justify-between p-4 bg-darkBg border border-cardBorder rounded-2xl text-sm">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-9 h-9 rounded-xl bg-primaryAccent/10 border border-primaryAccent/20 flex items-center justify-center text-primaryAccent font-bold">
+                            ₿
+                        </div>
+                        <div>
+                            <p class="font-medium text-white">0.025 BTC <span class="text-xs text-gray-500 font-normal">via Bitcoin</span></p>
+                            <p class="text-xs text-gray-400 font-mono">Hash: bc1q...8jh2</p>
+                        </div>
+                    </div>
+                    <span class="text-xs text-gray-500">Hace 2 horas</span>
+                </div>
+
+                <div class="flex items-center justify-between p-4 bg-darkBg border border-cardBorder rounded-2xl text-sm">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-9 h-9 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 font-bold">
+                            Ξ
+                        </div>
+                        <div>
+                            <p class="font-medium text-white">150 USDT <span class="text-xs text-gray-500 font-normal">via Arbitrum</span></p>
+                            <p class="text-xs text-gray-400 font-mono">Hash: 0x4f2a...91bc</p>
+                        </div>
+                    </div>
+                    <span class="text-xs text-gray-500">Hace 1 día</span>
+                </div>
+
+                <div class="flex items-center justify-between p-4 bg-darkBg border border-cardBorder rounded-2xl text-sm">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-9 h-9 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 font-bold">
+                            ◎
+                        </div>
+                        <div>
+                            <p class="font-medium text-white">1.5 SOL <span class="text-xs text-gray-500 font-normal">via Solana</span></p>
+                            <p class="text-xs text-gray-400 font-mono">Hash: 5Kjw...9Lp2</p>
+                        </div>
+                    </div>
+                    <span class="text-xs text-gray-500">Hace 3 días</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="mt-auto border-t border-cardBorder bg-darkBg py-12 px-6">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center">
+                    <i data-lucide="shield-check" class="w-4 h-4 text-black"></i>
+                </div>
+                <span class="font-bold text-sm">FundWeb3 &bull; Open Source Support</span>
+            </div>
+
+            <!-- Redes Sociales y Contacto -->
+            <div class="flex items-center space-x-6 text-gray-400">
+                <a href="mailto:ayudameavivirdenuevo@gmail.com" title="Correo de Contacto" class="hover:text-primaryAccent transition-colors flex items-center space-x-1.5 text-xs">
+                    <i data-lucide="mail" class="w-4 h-4"></i>
+                    <span>ayudameavivirdenuevo@gmail.com</span>
+                </a>
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="hover:text-primaryAccent transition-colors">
+                    <i data-lucide="github" class="w-5 h-5"></i>
+                </a>
+                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="hover:text-primaryAccent transition-colors">
+                    <i data-lucide="twitter" class="w-5 h-5"></i>
+                </a>
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="hover:text-primaryAccent transition-colors">
+                    <i data-lucide="linkedin" class="w-5 h-5"></i>
+                </a>
+            </div>
+        </div>
+        <div class="max-w-6xl mx-auto mt-8 pt-6 border-t border-cardBorder/50 text-center text-xs text-gray-500">
+            <p>&copy; 2026 FundWeb3. Las donaciones en criptomonedas son definitivas y no reembolsables. Asegúrate de verificar las redes antes de realizar cualquier transacción.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript de Interactividad -->
+    <script>
+        // Inicializar Lucide Icons
+        lucide.createIcons();
+
+        // Base de datos de wallets configuradas
+        const cryptoData = {
+            btc: {
+                name: "Bitcoin (BTC)",
+                title: "Dirección de Depósito Bitcoin",
+                address: "bc1qr4d3hy39028nfwj7ak2x7ahh4qecujrpdgqhdv",
+                network: "Red: Bitcoin Mainnet",
+                badgeClass: "bg-orange-500/10 text-orange-400 border-orange-500/20"
+            },
+            eth: {
+                name: "Ethereum (ETH)",
+                title: "Dirección de Depósito Ethereum",
+                address: "0x83af84217e1fe4010249cde79f7d45a15ba4193f",
+                network: "Red: Ethereum Mainnet (ERC-20)",
+                badgeClass: "bg-blue-500/10 text-blue-400 border-blue-500/20"
+            },
+            arb: {
+                name: "USDT / USDC (Arbitrum)",
+                title: "Dirección de Depósito en Red de Bajo Costo",
+                address: "0x83af84217e1fe4010249cde79f7d45a15ba4193f",
+                network: "Red: Arbitrum One (Bajos fees)",
+                badgeClass: "bg-cyan-500/10 text-cyan-400 border-cyan-500/20"
+            },
+            sol: {
+                name: "Solana (SOL)",
+                title: "Dirección de Depósito Solana",
+                address: "TU7Kk279gZDnC1xpgsby5mJBPSQXjpxFgK",
+                network: "Red: Solana Mainnet",
+                badgeClass: "bg-purple-500/10 text-purple-400 border-purple-500/20"
+            }
+        };
+
+        let qrCodeInstance = null;
+
+        // Función para renderizar el QR dinámicamente
+        function renderQR(text) {
+            const container = document.getElementById("qrcode");
+            container.innerHTML = "";
+            qrCodeInstance = new QRCode(container, {
+                text: text,
+                width: 140,
+                height: 140,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
+
+        // Inicializar con Bitcoin por defecto al cargar la página
+        window.addEventListener("DOMContentLoaded", () => {
+            renderQR(cryptoData.btc.address);
+        });
+
+        // Sistema de Pestañas
+        function switchCrypto(type) {
+            // Actualizar botones
+            document.querySelectorAll('.crypto-tab').forEach(btn => {
+                btn.className = "crypto-tab px-5 py-2.5 rounded-xl font-medium text-sm transition-all text-gray-400 hover:text-white hover:bg-white/5";
+            });
+            const activeBtn = document.getElementById(`btn-${type}`);
+            activeBtn.className = "crypto-tab px-5 py-2.5 rounded-xl font-medium text-sm transition-all bg-primaryAccent text-black shadow-lg";
+
+            // Actualizar datos del DOM
+            const data = cryptoData[type];
+            document.getElementById("crypto-name").innerText = data.name;
+            document.getElementById("crypto-title").innerText = data.title;
+            document.getElementById("wallet-address").value = data.address;
+            
+            const badge = document.getElementById("crypto-network-badge");
+            badge.innerText = data.network;
+            badge.className = `text-xs px-3 py-1 rounded-full font-medium border ${data.badgeClass}`;
+
+            // Regenerar QR
+            renderQR(data.address);
+        }
+
+        // Función Copiar al Portapapeles con Notificación Toast
+        function copyWallet() {
+            const input = document.getElementById("wallet-address");
+            input.select();
+            input.setSelectionRange(0, 99999); // Para móviles
+
+            navigator.clipboard.writeText(input.value).then(() => {
+                showToast("¡Dirección copiada al portapapeles con éxito!");
+            }).catch(err => {
+                console.error('Error al copiar: ', err);
+            });
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById("toast");
+            const msgEl = document.getElementById("toast-message");
+            msgEl.innerText = message;
+
+            toast.classList.remove("translate-y-32", "opacity-0");
+            toast.classList.add("translate-y-0", "opacity-100");
+
+            setTimeout(() => {
+                toast.classList.remove("translate-y-0", "opacity-100");
+                toast.classList.add("translate-y-32", "opacity-0");
+            }, 3000);
+        }
+    </script>
 </body>
 </html>
