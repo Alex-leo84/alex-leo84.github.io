@@ -1,404 +1,511 @@
 <!DOCTYPE html>
-<html lang="es" class="dark scroll-smooth">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apoya mi Proyecto | Donaciones Web3</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        darkBg: '#0a0b0d',
-                        cardBg: '#12141a',
-                        cardBorder: '#232733',
-                        primaryAccent: '#00F2FE',
-                        secondaryAccent: '#4FACFE',
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-    <!-- Google Fonts: Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- qrcode.js para generar QR dinámicos -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    <style>
-        body { font-family: 'Inter', sans-serif; background-color: #0a0b0d; color: #f3f4f6; }
-        .glow { box-shadow: 0 0 40px -10px rgba(0, 242, 254, 0.15); }
-        .glow-btn:hover { box-shadow: 0 0 20px rgba(0, 242, 254, 0.4); }
-    </style>
-</head>
-<body class="bg-darkBg text-gray-100 min-h-screen flex flex-col selection:bg-primaryAccent selection:text-black">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#102b46">
 
-    <!-- Notificación Toast Flotante -->
-    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-32 opacity-0 transition-all duration-300 bg-gray-900 border border-primaryAccent/40 text-white px-5 py-3 rounded-xl shadow-2xl flex items-center space-x-3">
-        <i data-lucide="check-circle-2" class="w-5 h-5 text-primaryAccent"></i>
-        <span id="toast-message" class="text-sm font-medium">¡Dirección copiada al portapapeles!</span>
+  <title>Ayúdanos a Vivir de Nuevo | Una Familia Cubana</title>
+
+  <meta name="description" content="Ayúdanos a empezar de nuevo. Una familia cubana busca apoyo solidario para emigrar legalmente y construir un futuro digno.">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #f7f9fc;
+      color: #263648;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Playfair Display', serif;
+    }
+
+    .hero {
+      background:
+        linear-gradient(110deg, rgba(10,35,58,.94), rgba(13,54,76,.76)),
+        url('https://images.unsplash.com/photo-1500759285222-a95626b934cb?auto=format&fit=crop&w=1800&q=85');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .card {
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(20,40,60,.10);
+    }
+
+    .copy-btn {
+      transition: background .2s ease;
+    }
+
+    .copy-btn:hover {
+      background: #174c6b;
+    }
+
+    .section-space {
+      padding-top: 85px;
+      padding-bottom: 85px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- NAVEGACIÓN -->
+<header class="bg-white shadow-sm sticky top-0 z-50">
+  <nav class="max-w-7xl mx-auto px-5 py-4 flex justify-between items-center">
+
+    <a href="#" class="text-xl font-bold text-slate-800">
+      <span class="text-emerald-600">♥</span> Vivir de Nuevo
+    </a>
+
+    <div class="hidden md:flex gap-8 text-sm font-semibold text-slate-600">
+      <a href="#historia" class="hover:text-emerald-600">Nuestra historia</a>
+      <a href="#transparencia" class="hover:text-emerald-600">Transparencia</a>
+      <a href="#donaciones" class="hover:text-emerald-600">Donaciones</a>
+      <a href="#contacto" class="hover:text-emerald-600">Contacto</a>
     </div>
 
-    <!-- Header / Navbar -->
-    <header class="sticky top-0 z-40 backdrop-blur-md bg-darkBg/80 border-b border-cardBorder">
-        <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center shadow-lg">
-                    <i data-lucide="shield-check" class="w-6 h-6 text-black"></i>
-                </div>
-                <span class="font-bold text-lg tracking-tight bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">FundWeb3</span>
-            </div>
-            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-300">
-                <a href="#about" class="hover:text-primaryAccent transition-colors">Sobre Mí</a>
-                <a href="#donate" class="hover:text-primaryAccent transition-colors">Donar Cripto</a>
-                <a href="#transparency" class="hover:text-primaryAccent transition-colors">Transparencia</a>
-            </nav>
-            <div>
-                <a href="#donate" class="bg-white/10 hover:bg-white/20 border border-white/10 text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-all">
-                    Contribuir
-                </a>
-            </div>
+    <a href="#donaciones"
+       class="bg-emerald-600 text-white px-5 py-2.5 rounded-full text-sm font-bold hover:bg-emerald-700">
+      Ayudar ahora
+    </a>
+
+  </nav>
+</header>
+
+
+<!-- PORTADA -->
+<section class="hero min-h-[620px] flex items-center text-white">
+
+  <div class="max-w-7xl mx-auto px-6 py-24">
+
+    <div class="max-w-3xl">
+
+      <span class="inline-block bg-white/15 border border-white/30 px-4 py-2 rounded-full text-sm mb-7">
+        Una historia de esperanza y solidaridad
+      </span>
+
+      <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-7">
+        Ayúdanos a empezar de nuevo.
+        <span class="text-emerald-300">
+          Nuestro sueño es vivir dignamente.
+        </span>
+      </h1>
+
+      <p class="text-lg md:text-xl text-slate-200 leading-relaxed mb-9">
+        Somos una familia cubana que busca una oportunidad
+        para comenzar una nueva vida. Con tu solidaridad
+        podemos acercarnos a un futuro con más seguridad,
+        oportunidades y esperanza.
+      </p>
+
+      <a href="#donaciones"
+         class="inline-block bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-9 py-4 rounded-full shadow-lg">
+        ❤️ Quiero ayudar
+      </a>
+
+      <p class="mt-6 text-sm text-slate-300">
+        Cada pequeña contribución puede marcar una gran diferencia.
+      </p>
+
+    </div>
+  </div>
+
+</section>
+
+
+<!-- NUESTRA HISTORIA -->
+<section id="historia" class="section-space">
+
+  <div class="max-w-6xl mx-auto px-6">
+
+    <div class="grid md:grid-cols-2 gap-14 items-center">
+
+      <div>
+
+        <span class="text-emerald-600 font-bold uppercase tracking-widest text-sm">
+          Nuestra historia
+        </span>
+
+        <h2 class="text-3xl md:text-4xl font-bold text-slate-800 mt-4 mb-7">
+          Detrás de esta petición hay una familia y un sueño.
+        </h2>
+
+        <p class="text-slate-600 leading-8 mb-5">
+          Vivir en Cuba se ha convertido en un desafío cotidiano.
+          La escasez de alimentos, las dificultades para conseguir
+          medicamentos, los prolongados apagones y los problemas
+          con el suministro de agua afectan profundamente la vida
+          de miles de familias.
+        </p>
+
+        <p class="text-slate-600 leading-8 mb-5">
+          Nuestra familia también vive esta realidad. Cada día
+          intentamos salir adelante, trabajar y mantener viva
+          la esperanza de un futuro mejor.
+        </p>
+
+        <p class="text-slate-600 leading-8 mb-5">
+          Nuestro propósito es reunir los recursos necesarios
+          para iniciar un proceso de emigración legal y segura
+          hacia un país donde podamos trabajar, desarrollarnos
+          y construir una vida con mejores oportunidades.
+        </p>
+
+        <p class="text-slate-700 font-semibold leading-8">
+          No buscamos privilegios. Solo queremos una oportunidad
+          para trabajar, vivir dignamente y ofrecerle a nuestra
+          familia un futuro diferente.
+        </p>
+
+      </div>
+
+      <div class="rounded-3xl overflow-hidden shadow-xl">
+
+        <img
+          src="https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=1000&q=85"
+          alt="Familia compartiendo un momento juntos"
+          class="w-full h-[450px] object-cover"
+        >
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- TRANSPARENCIA -->
+<section id="transparencia" class="bg-white section-space">
+
+  <div class="max-w-5xl mx-auto px-6 text-center">
+
+    <span class="text-emerald-600 font-bold uppercase tracking-widest text-sm">
+      Transparencia y confianza
+    </span>
+
+    <h2 class="text-3xl md:text-4xl font-bold text-slate-800 mt-4 mb-8">
+      ¿Por qué utilizamos criptomonedas?
+    </h2>
+
+    <p class="text-slate-600 leading-8 text-lg mb-6">
+      Las restricciones financieras internacionales, las limitaciones
+      bancarias y las dificultades para recibir transferencias
+      internacionales desde Cuba pueden complicar los métodos
+      tradicionales de donación.
+    </p>
+
+    <p class="text-slate-600 leading-8 text-lg mb-10">
+      Por ese motivo ofrecemos direcciones de criptomonedas como
+      alternativa para recibir ayuda voluntaria directamente.
+      Estas operaciones pueden realizarse sin depender de un
+      intermediario de recaudación, aunque las redes tienen
+      comisiones y las transacciones no suelen poder revertirse.
+    </p>
+
+    <div class="grid md:grid-cols-3 gap-6">
+
+      <div class="bg-slate-50 rounded-2xl p-7">
+        <div class="text-4xl mb-4">🔐</div>
+        <h3 class="font-bold text-xl mb-3">Control directo</h3>
+        <p class="text-slate-600 text-sm leading-7">
+          Las contribuciones llegan a las direcciones indicadas.
+        </p>
+      </div>
+
+      <div class="bg-slate-50 rounded-2xl p-7">
+        <div class="text-4xl mb-4">🌍</div>
+        <h3 class="font-bold text-xl mb-3">Apoyo internacional</h3>
+        <p class="text-slate-600 text-sm leading-7">
+          Personas de diferentes países pueden colaborar.
+        </p>
+      </div>
+
+      <div class="bg-slate-50 rounded-2xl p-7">
+        <div class="text-4xl mb-4">🤝</div>
+        <h3 class="font-bold text-xl mb-3">Transparencia</h3>
+        <p class="text-slate-600 text-sm leading-7">
+          Las operaciones pueden verificarse públicamente
+          en las redes correspondientes.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- DONACIONES -->
+<section id="donaciones" class="section-space bg-slate-100">
+
+  <div class="max-w-6xl mx-auto px-6">
+
+    <div class="text-center mb-14">
+
+      <span class="text-emerald-600 font-bold uppercase tracking-widest text-sm">
+        Tu ayuda importa
+      </span>
+
+      <h2 class="text-3xl md:text-5xl font-bold text-slate-800 mt-4 mb-6">
+        Ayúdanos a construir un nuevo comienzo.
+      </h2>
+
+      <p class="text-slate-600 max-w-2xl mx-auto leading-8">
+        Puedes colaborar con cualquier cantidad. No existe
+        una contribución demasiado pequeña cuando nace
+        de la solidaridad.
+      </p>
+
+    </div>
+
+
+    <div class="grid md:grid-cols-3 gap-7">
+
+      <!-- BITCOIN -->
+      <div class="card bg-white rounded-3xl shadow-sm p-7 border border-slate-200">
+
+        <div class="text-5xl mb-5">₿</div>
+
+        <h3 class="text-2xl font-bold text-slate-800 mb-2">
+          Bitcoin
+        </h3>
+
+        <p class="text-sm text-slate-500 mb-6">
+          Red Bitcoin · BTC
+        </p>
+
+        <div class="bg-slate-100 rounded-xl p-4 mb-5">
+
+          <p class="text-xs text-slate-500 mb-2">
+            Dirección de recepción
+          </p>
+
+          <p id="btc"
+             class="text-sm font-mono break-all text-slate-800">
+            bc1qr4d3hy39028nfwj7ak2x7ahh4qecujrpdgqhdv
+          </p>
+
         </div>
-    </header>
 
-    <!-- Hero Section -->
-    <section class="relative pt-20 pb-16 px-6 overflow-hidden">
-        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-primaryAccent/10 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="max-w-4xl mx-auto text-center relative z-10">
-            <div class="inline-flex items-center space-x-2 bg-cardBg border border-cardBorder px-3.5 py-1.5 rounded-full text-xs font-medium text-primaryAccent mb-6">
-                <span class="w-2 h-2 rounded-full bg-primaryAccent animate-pulse"></span>
-                <span>Campaña Activa de Financiación Abierta</span>
-            </div>
-            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 leading-tight">
-                Impulsa el futuro del <span class="bg-gradient-to-r from-primaryAccent to-secondaryAccent bg-clip-text text-transparent">Software Libre</span> y la Innovación
-            </h1>
-            <p class="text-lg md:text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
-                Tu apoyo directo hace posible el desarrollo independiente, transparente y sin censura. Dona de forma segura mediante criptomonedas.
-            </p>
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-                <a href="#donate" class="w-full sm:w-auto bg-gradient-to-r from-primaryAccent to-secondaryAccent text-black font-semibold px-8 py-3.5 rounded-xl glow-btn transition-all flex items-center justify-center space-x-2">
-                    <span>Donar Ahora</span>
-                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                </a>
-                <a href="#about" class="w-full sm:w-auto bg-cardBg hover:bg-cardBorder border border-cardBorder text-gray-300 font-semibold px-8 py-3.5 rounded-xl transition-all">
-                    Conoce mi historia
-                </a>
-            </div>
+        <button onclick="copiar('btc', this)"
+          class="copy-btn w-full bg-slate-800 text-white rounded-xl py-3 font-bold">
+          📋 Copiar dirección
+        </button>
 
-            <!-- Estadísticas Rápidas -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 p-6 rounded-2xl bg-cardBg/60 border border-cardBorder backdrop-blur-sm">
-                <div>
-                    <p class="text-xs uppercase tracking-wider text-gray-400 mb-1">Meta de Recaudación</p>
-                    <p class="text-2xl font-bold text-white">$10,000 <span class="text-sm text-gray-400 font-normal">USD</span></p>
-                </div>
-                <div>
-                    <p class="text-xs uppercase tracking-wider text-gray-400 mb-1">Recaudado Actual</p>
-                    <p class="text-2xl font-bold text-primaryAccent">$6,450 <span class="text-sm text-gray-400 font-normal">USD (64.5%)</span></p>
-                </div>
-                <div>
-                    <p class="text-xs uppercase tracking-wider text-gray-400 mb-1">Donantes Totales</p>
-                    <p class="text-2xl font-bold text-white">42 <span class="text-sm text-primaryAccent font-normal">+ Web3 Supporters</span></p>
-                </div>
-            </div>
-        </div>
-    </section>
+      </div>
 
-    <!-- Barra de Progreso -->
-    <section class="py-6 px-6 max-w-4xl mx-auto w-full">
-        <div class="bg-cardBg border border-cardBorder p-6 rounded-2xl">
-            <div class="flex justify-between items-center mb-3 text-sm font-medium">
-                <span class="text-gray-300">Progreso de la meta global</span>
-                <span class="text-primaryAccent font-semibold">64.5% Completado</span>
-            </div>
-            <div class="w-full bg-gray-800 h-3 rounded-full overflow-hidden p-0.5 border border-cardBorder">
-                <div class="bg-gradient-to-r from-primaryAccent to-secondaryAccent h-full rounded-full transition-all duration-1000" style="width: 64.5%;"></div>
-            </div>
-            <div class="flex justify-between items-center mt-3 text-xs text-gray-500">
-                <span>$6,450 USD</span>
-                <span>Meta: $10,000 USD</span>
-            </div>
-        </div>
-    </section>
 
-    <!-- Sobre Mí / El Proyecto -->
-    <section id="about" class="py-16 px-6 max-w-4xl mx-auto">
-        <div class="bg-cardBg border border-cardBorder p-8 md:p-10 rounded-3xl">
-            <h2 class="text-2xl md:text-3xl font-bold mb-6 flex items-center space-x-3">
-                <i data-lucide="terminal" class="w-7 h-7 text-primaryAccent"></i>
-                <span>Sobre Mí y la Transparencia de Fondos</span>
-            </h2>
-            <div class="space-y-4 text-gray-300 leading-relaxed text-base">
-                <p>
-                    Hola, soy desarrollador de software apasionado por la descentralización, la privacidad digital y las herramientas de código abierto. Dedico el 100% de mi tiempo a crear software accesible para todos, libre de corporaciones centralizadas.
-                </p>
-                <p>
-                    Los fondos recaudados a través de esta campaña serán destinados exclusivamente a cubrir costos operativos críticos:
-                </p>
-                <ul class="list-disc list-inside space-y-2 text-gray-400 pl-2">
-                    <li><strong class="text-white">Infraestructura y Servidores:</strong> Hosting seguro, nodos RPC y bases de datos descentralizadas.</li>
-                    <li><strong class="text-white">Auditorías de Código:</strong> Revisiones de seguridad por terceros para garantizar contratos y software libres de vulnerabilidades.</li>
-                    <li><strong class="text-white">Sostenibilidad a Tiempo Completo:</strong> Horas de desarrollo dedicadas a liberar nuevas actualizaciones y parches de seguridad.</li>
-                </ul>
-            </div>
-        </div>
-    </section>
+      <!-- ETHEREUM -->
+      <div class="card bg-white rounded-3xl shadow-sm p-7 border border-slate-200">
 
-    <!-- Módulos de Donación por Criptomoneda -->
-    <section id="donate" class="py-16 px-6 max-w-4xl mx-auto">
-        <div class="text-center mb-10">
-            <h2 class="text-3xl font-bold mb-3">Elige tu Criptomoneda</h2>
-            <p class="text-gray-400">Selecciona el token o red de tu preferencia para realizar tu contribución.</p>
+        <div class="text-5xl mb-5">◆</div>
+
+        <h3 class="text-2xl font-bold text-slate-800 mb-2">
+          Ethereum
+        </h3>
+
+        <p class="text-sm text-slate-500 mb-6">
+          Red Ethereum / EVM · ETH / USDT / USDC
+        </p>
+
+        <div class="bg-slate-100 rounded-xl p-4 mb-5">
+
+          <p class="text-xs text-slate-500 mb-2">
+            Dirección de recepción
+          </p>
+
+          <p id="eth"
+             class="text-sm font-mono break-all text-slate-800">
+            0x83af84217e1fe4010249cde79f7d45a15ba4193f
+          </p>
+
         </div>
 
-        <div class="bg-cardBg border border-cardBorder rounded-3xl p-6 md:p-8">
-            <!-- Pestañas de Criptomonedas -->
-            <div class="flex flex-wrap gap-2 justify-center mb-8 border-b border-cardBorder pb-6">
-                <button onclick="switchCrypto('btc')" id="btn-btc" class="crypto-tab px-5 py-2.5 rounded-xl font-medium text-sm transition-all bg-primaryAccent text-black shadow-lg">
-                    Bitcoin (BTC)
-                </button>
-                <button onclick="switchCrypto('eth')" id="btn-eth" class="crypto-tab px-5 py-2.5 rounded-xl font-medium text-sm transition-all text-gray-400 hover:text-white hover:bg-white/5">
-                    Ethereum (ETH)
-                </button>
-                <button onclick="switchCrypto('arb')" id="btn-arb" class="crypto-tab px-5 py-2.5 rounded-xl font-medium text-sm transition-all text-gray-400 hover:text-white hover:bg-white/5">
-                    USDT/USDC (Arbitrum)
-                </button>
-                <button onclick="switchCrypto('sol')" id="btn-sol" class="crypto-tab px-5 py-2.5 rounded-xl font-medium text-sm transition-all text-gray-400 hover:text-white hover:bg-white/5">
-                    Solana (SOL)
-                </button>
-            </div>
+        <button onclick="copiar('eth', this)"
+          class="copy-btn w-full bg-slate-800 text-white rounded-xl py-3 font-bold">
+          📋 Copiar dirección
+        </button>
 
-            <!-- Contenido de las Pestañas -->
-            <div id="crypto-content" class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                <!-- Contenedor QR -->
-                <div class="flex flex-col items-center justify-center p-6 bg-darkBg border border-cardBorder rounded-2xl">
-                    <div id="qrcode" class="p-3 bg-white rounded-xl shadow-md mb-4"></div>
-                    <span id="crypto-network-badge" class="text-xs px-3 py-1 rounded-full bg-orange-500/10 text-orange-400 font-medium border border-orange-500/20">
-                        Red: Bitcoin Mainnet
-                    </span>
-                </div>
+      </div>
 
-                <!-- Detalles de la Wallet -->
-                <div class="space-y-6">
-                    <div>
-                        <span id="crypto-name" class="text-xs uppercase tracking-wider text-primaryAccent font-semibold block mb-1">Bitcoin (BTC)</span>
-                        <h3 class="text-xl font-bold text-white" id="crypto-title">Dirección de Depósito Directo</h3>
-                    </div>
 
-                    <div>
-                        <label class="block text-xs font-medium text-gray-400 mb-2">Dirección de la Wallet:</label>
-                        <div class="flex items-center space-x-2 bg-darkBg border border-cardBorder rounded-xl p-3">
-                            <input type="text" id="wallet-address" readonly class="bg-transparent text-sm text-gray-300 w-full focus:outline-none font-mono truncate" value="bc1qr4d3hy39028nfwj7ak2x7ahh4qecujrpdgqhdv">
-                            <button onclick="copyWallet()" class="bg-primaryAccent hover:bg-cyan-400 text-black px-4 py-2 rounded-lg text-xs font-semibold transition-all flex items-center space-x-1 shrink-0">
-                                <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                                <span>Copiar</span>
-                            </button>
-                        </div>
-                    </div>
+      <!-- TRON -->
+      <div class="card bg-white rounded-3xl shadow-sm p-7 border border-slate-200">
 
-                    <div class="p-4 rounded-xl bg-yellow-500/10 border border-yellow-500/20 text-yellow-300 text-xs flex items-start space-x-3">
-                        <i data-lucide="alert-triangle" class="w-5 h-5 shrink-0 text-yellow-400 mt-0.5"></i>
-                        <p><strong class="font-semibold">Aviso importante:</strong> Envía únicamente los activos correspondientes a la red especificada. Enviar otros tokens o usar redes incorrectas puede resultar en la pérdida permanente de tus fondos.</p>
-                    </div>
-                </div>
-            </div>
+        <div class="text-5xl mb-5">🔴</div>
+
+        <h3 class="text-2xl font-bold text-slate-800 mb-2">
+          Tether USDT
+        </h3>
+
+        <p class="text-sm text-slate-500 mb-6">
+          Red Tron · TRC20
+        </p>
+
+        <div class="bg-slate-100 rounded-xl p-4 mb-5">
+
+          <p class="text-xs text-slate-500 mb-2">
+            Dirección de recepción
+          </p>
+
+          <p id="trx"
+             class="text-sm font-mono break-all text-slate-800">
+            TU7Kk279gZDnC1xpgsby5mJBPSQXjpxFgK
+          </p>
+
         </div>
-    </section>
 
-    <!-- Muro de Agradecimientos / Transparencia -->
-    <section id="transparency" class="py-16 px-6 max-w-4xl mx-auto">
-        <div class="bg-cardBg border border-cardBorder p-8 md:p-10 rounded-3xl">
-            <h2 class="text-2xl font-bold mb-6 flex items-center space-x-3">
-                <i data-lucide="heart-handshake" class="w-6 h-6 text-primaryAccent"></i>
-                <span>Últimas Contribuciones Verificadas</span>
-            </h2>
-            <div class="space-y-4">
-                <div class="flex items-center justify-between p-4 bg-darkBg border border-cardBorder rounded-2xl text-sm">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-9 h-9 rounded-xl bg-primaryAccent/10 border border-primaryAccent/20 flex items-center justify-center text-primaryAccent font-bold">
-                            ₿
-                        </div>
-                        <div>
-                            <p class="font-medium text-white">0.025 BTC <span class="text-xs text-gray-500 font-normal">via Bitcoin</span></p>
-                            <p class="text-xs text-gray-400 font-mono">Hash: bc1q...8jh2</p>
-                        </div>
-                    </div>
-                    <span class="text-xs text-gray-500">Hace 2 horas</span>
-                </div>
+        <button onclick="copiar('trx', this)"
+          class="copy-btn w-full bg-slate-800 text-white rounded-xl py-3 font-bold">
+          📋 Copiar dirección
+        </button>
 
-                <div class="flex items-center justify-between p-4 bg-darkBg border border-cardBorder rounded-2xl text-sm">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-9 h-9 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 font-bold">
-                            Ξ
-                        </div>
-                        <div>
-                            <p class="font-medium text-white">150 USDT <span class="text-xs text-gray-500 font-normal">via Arbitrum</span></p>
-                            <p class="text-xs text-gray-400 font-mono">Hash: 0x4f2a...91bc</p>
-                        </div>
-                    </div>
-                    <span class="text-xs text-gray-500">Hace 1 día</span>
-                </div>
+      </div>
 
-                <div class="flex items-center justify-between p-4 bg-darkBg border border-cardBorder rounded-2xl text-sm">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-9 h-9 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 font-bold">
-                            ◎
-                        </div>
-                        <div>
-                            <p class="font-medium text-white">1.5 SOL <span class="text-xs text-gray-500 font-normal">via Solana</span></p>
-                            <p class="text-xs text-gray-400 font-mono">Hash: 5Kjw...9Lp2</p>
-                        </div>
-                    </div>
-                    <span class="text-xs text-gray-500">Hace 3 días</span>
-                </div>
-            </div>
-        </div>
-    </section>
+    </div>
 
-    <!-- Footer -->
-    <footer class="mt-auto border-t border-cardBorder bg-darkBg py-12 px-6">
-        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-            <div class="flex items-center space-x-3">
-                <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center">
-                    <i data-lucide="shield-check" class="w-4 h-4 text-black"></i>
-                </div>
-                <span class="font-bold text-sm">FundWeb3 &bull; Open Source Support</span>
-            </div>
 
-            <!-- Redes Sociales y Contacto -->
-            <div class="flex items-center space-x-6 text-gray-400">
-                <a href="mailto:ayudameavivirdenuevo@gmail.com" title="Correo de Contacto" class="hover:text-primaryAccent transition-colors flex items-center space-x-1.5 text-xs">
-                    <i data-lucide="mail" class="w-4 h-4"></i>
-                    <span>ayudameavivirdenuevo@gmail.com</span>
-                </a>
-                <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="hover:text-primaryAccent transition-colors">
-                    <i data-lucide="github" class="w-5 h-5"></i>
-                </a>
-                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="hover:text-primaryAccent transition-colors">
-                    <i data-lucide="twitter" class="w-5 h-5"></i>
-                </a>
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="hover:text-primaryAccent transition-colors">
-                    <i data-lucide="linkedin" class="w-5 h-5"></i>
-                </a>
-            </div>
-        </div>
-        <div class="max-w-6xl mx-auto mt-8 pt-6 border-t border-cardBorder/50 text-center text-xs text-gray-500">
-            <p>&copy; 2026 FundWeb3. Las donaciones en criptomonedas son definitivas y no reembolsables. Asegúrate de verificar las redes antes de realizar cualquier transacción.</p>
-        </div>
-    </footer>
+    <div class="max-w-3xl mx-auto mt-10 bg-amber-50 border border-amber-200 rounded-2xl p-6">
 
-    <!-- JavaScript de Interactividad -->
-    <script>
-        // Inicializar Lucide Icons
-        lucide.createIcons();
+      <h3 class="font-bold text-amber-900 mb-3">
+        ⚠️ Información importante antes de donar
+      </h3>
 
-        // Base de datos de wallets configuradas
-        const cryptoData = {
-            btc: {
-                name: "Bitcoin (BTC)",
-                title: "Dirección de Depósito Bitcoin",
-                address: "bc1qr4d3hy39028nfwj7ak2x7ahh4qecujrpdgqhdv",
-                network: "Red: Bitcoin Mainnet",
-                badgeClass: "bg-orange-500/10 text-orange-400 border-orange-500/20"
-            },
-            eth: {
-                name: "Ethereum (ETH)",
-                title: "Dirección de Depósito Ethereum",
-                address: "0x83af84217e1fe4010249cde79f7d45a15ba4193f",
-                network: "Red: Ethereum Mainnet (ERC-20)",
-                badgeClass: "bg-blue-500/10 text-blue-400 border-blue-500/20"
-            },
-            arb: {
-                name: "USDT / USDC (Arbitrum)",
-                title: "Dirección de Depósito en Red de Bajo Costo",
-                address: "0x83af84217e1fe4010249cde79f7d45a15ba4193f",
-                network: "Red: Arbitrum One (Bajos fees)",
-                badgeClass: "bg-cyan-500/10 text-cyan-400 border-cyan-500/20"
-            },
-            sol: {
-                name: "Solana (SOL)",
-                title: "Dirección de Depósito Solana",
-                address: "TU7Kk279gZDnC1xpgsby5mJBPSQXjpxFgK",
-                network: "Red: Solana Mainnet",
-                badgeClass: "bg-purple-500/10 text-purple-400 border-purple-500/20"
-            }
-        };
+      <p class="text-sm text-amber-900 leading-7">
+        Comprueba cuidadosamente la red y la dirección antes
+        de enviar fondos. BTC debe enviarse por la red Bitcoin.
+        ETH, USDT y USDC deben enviarse por una red EVM compatible.
+        USDT TRC20 debe enviarse exclusivamente por Tron.
+        No envíes activos a una red incompatible: podrías perderlos.
+        Las transacciones confirmadas generalmente son irreversibles.
+      </p>
 
-        let qrCodeInstance = null;
+    </div>
 
-        // Función para renderizar el QR dinámicamente
-        function renderQR(text) {
-            const container = document.getElementById("qrcode");
-            container.innerHTML = "";
-            qrCodeInstance = new QRCode(container, {
-                text: text,
-                width: 140,
-                height: 140,
-                colorDark: "#000000",
-                colorLight: "#ffffff",
-                correctLevel: QRCode.CorrectLevel.H
-            });
-        }
+  </div>
 
-        // Inicializar con Bitcoin por defecto al cargar la página
-        window.addEventListener("DOMContentLoaded", () => {
-            renderQR(cryptoData.btc.address);
-        });
+</section>
 
-        // Sistema de Pestañas
-        function switchCrypto(type) {
-            // Actualizar botones
-            document.querySelectorAll('.crypto-tab').forEach(btn => {
-                btn.className = "crypto-tab px-5 py-2.5 rounded-xl font-medium text-sm transition-all text-gray-400 hover:text-white hover:bg-white/5";
-            });
-            const activeBtn = document.getElementById(`btn-${type}`);
-            activeBtn.className = "crypto-tab px-5 py-2.5 rounded-xl font-medium text-sm transition-all bg-primaryAccent text-black shadow-lg";
 
-            // Actualizar datos del DOM
-            const data = cryptoData[type];
-            document.getElementById("crypto-name").innerText = data.name;
-            document.getElementById("crypto-title").innerText = data.title;
-            document.getElementById("wallet-address").value = data.address;
-            
-            const badge = document.getElementById("crypto-network-badge");
-            badge.innerText = data.network;
-            badge.className = `text-xs px-3 py-1 rounded-full font-medium border ${data.badgeClass}`;
+<!-- AGRADECIMIENTOS -->
+<section id="contacto" class="section-space bg-white">
 
-            // Regenerar QR
-            renderQR(data.address);
-        }
+  <div class="max-w-4xl mx-auto px-6 text-center">
 
-        // Función Copiar al Portapapeles con Notificación Toast
-        function copyWallet() {
-            const input = document.getElementById("wallet-address");
-            input.select();
-            input.setSelectionRange(0, 99999); // Para móviles
+    <div class="text-5xl mb-6">💚</div>
 
-            navigator.clipboard.writeText(input.value).then(() => {
-                showToast("¡Dirección copiada al portapapeles con éxito!");
-            }).catch(err => {
-                console.error('Error al copiar: ', err);
-            });
-        }
+    <h2 class="text-3xl md:text-5xl font-bold text-slate-800 mb-7">
+      Gracias por ayudarnos a mantener viva la esperanza.
+    </h2>
 
-        function showToast(message) {
-            const toast = document.getElementById("toast");
-            const msgEl = document.getElementById("toast-message");
-            msgEl.innerText = message;
+    <p class="text-slate-600 text-lg leading-8 mb-8">
+      Si has llegado hasta aquí, queremos agradecerte
+      sinceramente por dedicarnos unos minutos de tu tiempo.
+      Quizás no puedas colaborar económicamente, pero compartir
+      nuestra historia también puede ayudarnos muchísimo.
+    </p>
 
-            toast.classList.remove("translate-y-32", "opacity-0");
-            toast.classList.add("translate-y-0", "opacity-100");
+    <p class="text-slate-700 font-semibold mb-8">
+      Cada gesto de solidaridad cuenta. Gracias por creer
+      que todas las familias merecen una oportunidad.
+    </p>
 
-            setTimeout(() => {
-                toast.classList.remove("translate-y-0", "opacity-100");
-                toast.classList.add("translate-y-32", "opacity-0");
-            }, 3000);
-        }
-    </script>
-</body>
-</html>
+    <a href="mailto:ayudameavivirdenuevo@gmail.com"
+       class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-8 py-4 rounded-full">
+      ✉️ Contactar con nosotros
+    </a>
+
+    <p class="mt-7 text-slate-500 text-sm">
+      Correo electrónico:
+    </p>
+
+    <a href="mailto:ayudameavivirdenuevo@gmail.com"
+       class="text-emerald-700 font-bold break-all">
+      ayudameavivirdenuevo@gmail.com
+    </a>
+
+  </div>
+
+</section>
+
+
+<!-- PIE DE PÁGINA -->
+<footer class="bg-slate-900 text-slate-300 py-9">
+
+  <div class="max-w-6xl mx-auto px-6 text-center">
+
+    <p class="text-xl font-bold text-white mb-3">
+      ♥ Ayúdanos a Vivir de Nuevo
+    </p>
+
+    <p class="text-sm mb-4">
+      Una familia, un sueño y una oportunidad para comenzar de nuevo.
+    </p>
+
+    <div class="border-t border-slate-700 pt-5 mt-5 text-xs text-slate-400">
+
+      <p>
+        © 2026 Ayúdanos a Vivir de Nuevo.
+        Todos los derechos reservados.
+      </p>
+
+      <p class="mt-2">
+        Campaña personal de apoyo voluntario.
+      </p>
+
+    </div>
+
+  </div>
+
+</footer>
+
+
+<!-- JAVASCRIPT: COPIAR DIRECCIONES -->
+<script>
+
+async function copiar(id, boton) {
+
+  const direccion = document.getElementById(id).innerText.trim();
+
+  try {
+
+    await navigator.clipboard.writeText(direccion);
+
+    const textoOriginal = boton.innerHTML;
+
+    boton.innerHTML = "✅ ¡Dirección copiada!";
+    boton.classList.remove("bg-slate-800");
+    boton.classList.add("bg-emerald-600");
+
+    setTimeout(() => {
+
+      boton.innerHTML = textoOriginal;
+      boton.classList.remove("bg-emerald-600");
+      boton.classList.add("bg-slate-800");
+
+    }, 2500);
+
+  } catch (error) {
+
+    const campo = document.createElement("textarea");
+    campo.value = direccion;
+
+    document
